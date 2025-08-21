@@ -40,8 +40,8 @@ def play_game():
     # We then need to convert it to a number using `int`
     row = int(input("Enter a row: "))
     column = int(input("Enter a column: "))
-    if not is_move_valid: #is move valid
-      print("invalid move")
+    if not is_move_valid(board, row, column):
+      print("Invalid move")
       continue
     board = make_move(board, row, column, player)
     if player == "X":
@@ -53,7 +53,7 @@ def play_game():
 
 def is_move_valid(board, row, column):
   return board[row][column] == "."
-  
+
 def print_board(board):
   formatted_rows = []
   for row in board:
@@ -80,6 +80,12 @@ def is_group_complete(board, coord_1, coord_2, coord_3):
   cells = get_cells(board, coord_1, coord_2, coord_3)
   return "." not in cells
 
+def is_game_draw(board):
+  for row in board:
+    if "." in row:
+     return False
+  return True
+
 # This function will check if the group is all the same
 # player mark: X X X or O O O
 def are_all_cells_the_same(board, coord_1, coord_2, coord_3):
@@ -103,6 +109,8 @@ groups_to_check = [
 ]
 
 def is_game_over(board):
+  if is_game_draw(board):#draw
+    return True
   # We go through our groups
   for group in groups_to_check:
     # If any of them are empty, they're clearly not a winning row, so we skip
