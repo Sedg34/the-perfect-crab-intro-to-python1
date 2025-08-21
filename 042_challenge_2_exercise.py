@@ -40,6 +40,9 @@ def play_game():
     # We then need to convert it to a number using `int`
     row = int(input("Enter a row: "))
     column = int(input("Enter a column: "))
+    if not is_move_valid: #is move valid
+      print("invalid move")
+      continue
     board = make_move(board, row, column, player)
     if player == "X":
       player = "O"
@@ -48,6 +51,9 @@ def play_game():
   print(print_board(board))
   print("Game over!")
 
+def is_move_valid(board, row, column):
+  return board[row][column] == "."
+  
 def print_board(board):
   formatted_rows = []
   for row in board:
